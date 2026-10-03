@@ -405,6 +405,9 @@
     /* Card Paper Surface Base */
     .paper-card-surface {
       position: relative;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
       background: var(--kraft-paper);
       color: var(--text-dark);
       border-radius: 16px;
@@ -1978,7 +1981,7 @@
           </p>
 
           <p>
-            and whenever jab tak plays my mind goes straight to u. i think about the way u look at me when u think am not paying attention, the quiet moments where we do absolutely nothing special, and how js sitting next to u makes evrything feel softer. tor sathe thakle normal din gulo cinematic hoye jae. u are my comfort zone, my safe space, and my fav chaos all wrapped into one.
+            and whenever jab tak plays my mind goes straight to u. i think about the way u look at me when u think am not paying attention, the quiet moments where we do absolutely nothing special, and how js when we are together makes evrything feel softer. tor sathe thakle normal din gulo cinematic hoye jae. u are my comfort zone, my safe space, and my fav chaos all wrapped into one.
           </p>
 
           <div class="quote-highlight">
@@ -2354,6 +2357,10 @@
             this website is yours forever. whenever you feel annoyed with me, miss us, or just want a reminder of how deeply you are loved — open this card.
           </p>
 
+          <p style="font-size: 0.95rem; color: #cfc5b8; background: rgba(241, 196, 15, 0.08); padding: 12px 16px; border-radius: 12px; border: 1px dashed rgba(241, 196, 15, 0.35); margin-top: 4px;">
+            🔒 this is a private web page i built just for you, privately hosted on a private cloud server where only you can enter with our secret passcode. it will stay right here for you forever.
+          </p>
+
           <div class="action-buttons">
             <button class="btn-action btn-mad" onclick="handleMadResponse()">
               <span>😤</span> still mad at you, but i read it
@@ -2474,7 +2481,17 @@
         dot.classList.toggle('active', index === (currentPage - 1));
       });
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Instantly reset scroll to top of page/card so she starts reading from the top
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const cardSurface = activeEl ? activeEl.querySelector('.paper-card-surface') : null;
+      if (cardSurface) {
+        cardSurface.scrollTop = 0;
+      }
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 50);
     }
 
     function changePage(delta) {
@@ -2535,7 +2552,7 @@
         }
       }
     }
-    setInterval(rotateBgSlideshow, 4500);
+    setInterval(rotateBgSlideshow, 7000);
 
     // Initial check for background video playback
     document.addEventListener('DOMContentLoaded', () => {
@@ -2806,7 +2823,7 @@
         ctx.restore();
       }
     }
-    for (let i = 0; i < 15; i++) petals.push(new Petal());
+    for (let i = 0; i < 8; i++) petals.push(new Petal());
 
     function animatePetals() {
       ctx.clearRect(0, 0, width, height);
